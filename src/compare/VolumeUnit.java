@@ -1,6 +1,6 @@
 package compare;
 
-public enum  VolumeUnit {
+public enum  VolumeUnit implements MeasurementUnit{
     GALLON(3780),
     LITER(1000);
 
@@ -9,7 +9,7 @@ public enum  VolumeUnit {
     VolumeUnit(double oneUnitValueInML) {
         this.oneUnitValueInML = oneUnitValueInML;
     }
-    public double inBaseUnit(double value){
-        return oneUnitValueInML * value;
+    public double convertToBase(double value){
+        return Math.round(oneUnitValueInML * value);
     };
 }

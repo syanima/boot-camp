@@ -1,6 +1,6 @@
 package compare;
 
-public enum LengthUnit {
+public enum LengthUnit implements MeasurementUnit {
     FEET(304.8),
     INCH(25.4),
     CENTIMETER(10),
@@ -11,7 +11,10 @@ public enum LengthUnit {
     LengthUnit(double oneUnitValueInMM) {
         this.oneUnitValueInMM = oneUnitValueInMM;
     }
-    public double inBaseUnit(double value){
-        return oneUnitValueInMM * value;
-    };
+
+    public double convertToBase(double value) {
+        return Math.round(oneUnitValueInMM * value);
+    }
+
+    ;
 }
