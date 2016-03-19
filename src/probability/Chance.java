@@ -5,7 +5,7 @@ job of the class :-
 
  */
 
-import exception.InvalidProbabilityException;
+import exceptions.InvalidProbabilityException;
 
 public class Chance {
     private double value;
@@ -43,9 +43,4 @@ public class Chance {
 
     }
 
-    @Override
-    public int hashCode() {
-        long temp = Double.doubleToLongBits(value);
-        return (int) (temp ^ (temp >>> 32));
-    }
 }

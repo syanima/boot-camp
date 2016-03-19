@@ -1,6 +1,6 @@
 package probability;
 
-import exception.InvalidProbabilityException;
+import exceptions.InvalidProbabilityException;
 import org.hamcrest.CoreMatchers;
 import org.junit.Rule;
 import org.junit.Test;
