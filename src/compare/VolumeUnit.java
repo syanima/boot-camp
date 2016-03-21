@@ -14,7 +14,7 @@ public enum VolumeUnit implements MeasurementUnit {
         return Math.round(oneUnitValueInML * value);
     }
 
-    public double convertToThis(double value) {
+    public double convertToThisUnit(double value) {
         return value / oneUnitValueInML;
     }
 }

@@ -5,8 +5,8 @@ public class Volume extends Measurement<Volume,VolumeUnit> {
         super(value, unit);
     }
 
-    public Volume add(Volume anotherVolume, VolumeUnit resultUnit){
-        double sum = super.convertToBase() + anotherVolume.convertToBase();
-        return new Volume( resultUnit.convertToThis(sum), resultUnit);
+    @Override
+    protected Volume createMeasurement(double sum, VolumeUnit resultUnit) {
+        return new Volume(resultUnit.convertToThisUnit(sum), resultUnit);
     }
 }

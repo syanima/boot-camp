@@ -2,9 +2,7 @@ package compare;
 
 //Compares between 2 measurement when they are of same type
 
-import exceptions.MeasurementTypeException;
-
-public abstract class Measurement<MeasurementType, MeasurementUnit> {
+public abstract class Measurement<MeasurementType extends Measurement, Unit extends MeasurementUnit> {
     private compare.MeasurementUnit unit;
     private double value;
 
@@ -17,25 +15,25 @@ public abstract class Measurement<MeasurementType, MeasurementUnit> {
         return unit.convertToBase(value);
     }
 
-    public boolean compare(Measurement anotherMeasurement) throws MeasurementTypeException {
+    public int compare(Measurement anotherMeasurement) throws MeasurementTypeException {
         throwExceptionWhenTypeMissmatched(anotherMeasurement, "Cannot compare two different measurement");
-        return unit.convertToBase(value) == anotherMeasurement.convertToBase();
+        double delta = unit.convertToBase(value) - anotherMeasurement.convertToBase();
+        if (delta == 0)
+            return 0;
+        return new Double(delta / Math.abs(delta)).intValue();
     }
 
-    public abstract MeasurementType add(MeasurementType anotherMeasurement, MeasurementUnit resultUnit);
+    public MeasurementType add(MeasurementType anotherMeasurement, Unit resultUnit) {
+        double sum = convertToBase() + anotherMeasurement.convertToBase();
+        return createMeasurement(sum, resultUnit);
+    }
+
+    protected abstract MeasurementType createMeasurement(double sum, Unit resultUnit);
 
     private void throwExceptionWhenTypeMissmatched(Measurement anotherMeasurement, String message) throws MeasurementTypeException {
         String thisUnitType = unit.getClass().getName();
         String anotherUnitType = anotherMeasurement.unit.getClass().getName();
         if (!thisUnitType.equals(anotherUnitType))
             throw new MeasurementTypeException(message);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Measurement)) return false;
-        Measurement givenMeasurement = (Measurement) obj;
-        if (givenMeasurement.unit != unit) return false;
-        return Math.round(value) == Math.round(givenMeasurement.value);
     }
 }
