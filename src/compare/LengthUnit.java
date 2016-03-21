@@ -16,5 +16,7 @@ public enum LengthUnit implements MeasurementUnit {
         return Math.round(oneUnitValueInMM * value);
     }
 
-    ;
+    public double convertToThis(double value) {
+        return value/oneUnitValueInMM;
+    }
 }

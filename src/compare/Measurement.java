@@ -1,20 +1,19 @@
 package compare;
 
 //Compares between 2 measurement when they are of same type
-//adds 2 measurement if possible
 
 import exceptions.MeasurementTypeException;
 
-public class Measurement {
-    private MeasurementUnit unit;
+public abstract class Measurement<MeasurementType, MeasurementUnit> {
+    private compare.MeasurementUnit unit;
     private double value;
 
-    public Measurement(double value, MeasurementUnit unit) {
+    public Measurement(double value, compare.MeasurementUnit unit) {
         this.unit = unit;
         this.value = value;
     }
 
-    private double convertToBase() {
+    protected double convertToBase() {
         return unit.convertToBase(value);
     }
 
@@ -23,21 +22,13 @@ public class Measurement {
         return unit.convertToBase(value) == anotherMeasurement.convertToBase();
     }
 
-    public Measurement add(Measurement anotherMeasurement, MeasurementUnit resultUnit) throws MeasurementTypeException {
-        throwExceptionWhenTypeMissmatched(anotherMeasurement, "My teacher is an idiot");
-        double sum = convertToBase() + anotherMeasurement.convertToBase();
-        return new Measurement( convertTo(resultUnit, sum), resultUnit );
-    }
+    public abstract MeasurementType add(MeasurementType anotherMeasurement, MeasurementUnit resultUnit);
 
     private void throwExceptionWhenTypeMissmatched(Measurement anotherMeasurement, String message) throws MeasurementTypeException {
         String thisUnitType = unit.getClass().getName();
         String anotherUnitType = anotherMeasurement.unit.getClass().getName();
         if (!thisUnitType.equals(anotherUnitType))
             throw new MeasurementTypeException(message);
-    }
-
-    private double convertTo(MeasurementUnit measurementUnit, double value) {
-        return value / measurementUnit.convertToBase(1);
     }
 
     @Override
