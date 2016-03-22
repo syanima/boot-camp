@@ -1,5 +1,6 @@
 package compare;
 
+import exceptions.MeasurementTypeException;
 import org.hamcrest.CoreMatchers;
 import org.junit.Rule;
 import org.junit.Test;

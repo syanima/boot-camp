@@ -2,6 +2,8 @@ package compare;
 
 //Compares between 2 measurement when they are of same type
 
+import exceptions.MeasurementTypeException;
+
 public abstract class Measurement<MeasurementType extends Measurement, Unit extends MeasurementUnit> {
     private compare.MeasurementUnit unit;
     private double value;
@@ -35,5 +37,6 @@ public abstract class Measurement<MeasurementType extends Measurement, Unit exte
         String anotherUnitType = anotherMeasurement.unit.getClass().getName();
         if (!thisUnitType.equals(anotherUnitType))
             throw new MeasurementTypeException(message);
+
     }
 }
