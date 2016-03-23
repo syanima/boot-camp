@@ -1,7 +1,5 @@
 package kingdom_of_Balloria;
 
-import exceptions.BallCantBeAddedBecauseConstraintIsBroken;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -40,7 +38,7 @@ public class Bag {
         return counter;
 
     }
-    public void addBall(Ball ball) throws BallCantBeAddedBecauseConstraintIsBroken {
+    public void addBall(Ball ball) throws BagLimitException, GreenBallLimitException, RedBallLimitException, YellowBallLimitException {
         if(ball.isOfSpecificColor(Color.GREEN))
             addGreenColorBall(ball);
         if (ball.isOfSpecificColor(Color.RED))
@@ -52,11 +50,11 @@ public class Bag {
         return;
     }
 
-    private void addYellowColorBall(Ball ball) throws BallCantBeAddedBecauseConstraintIsBroken {
+    private void addYellowColorBall(Ball ball) throws BagLimitException, YellowBallLimitException {
         if(isFull())
-            throw new BallCantBeAddedBecauseConstraintIsBroken("The Bag is full. You can't add any more balls.");
+            throw new BagLimitException();
         if(isFullOfYellowColor())
-            throw new BallCantBeAddedBecauseConstraintIsBroken("The Bag cannot add Yellow Ball at this point");
+            throw new YellowBallLimitException();
         balls.add(ball);
     }
 
@@ -69,45 +67,36 @@ public class Bag {
         return counter;
     }
 
-    private void addBlueColorBall(Ball newBall) throws BallCantBeAddedBecauseConstraintIsBroken {
+    private void addBlueColorBall(Ball newBall) throws BagLimitException {
         if(isFull())
-            throw new BallCantBeAddedBecauseConstraintIsBroken("The Bag is full. You can't add any more balls.");
+            throw new BagLimitException();
         balls.add(newBall);
         return;
     }
 
-    private void addRedColorBall(Ball newBall) throws BallCantBeAddedBecauseConstraintIsBroken {
+    private void addRedColorBall(Ball newBall) throws BagLimitException , RedBallLimitException {
         if(isFull())
-            throw new BallCantBeAddedBecauseConstraintIsBroken("The Bag is full. You can't add any more balls.");
+            throw new BagLimitException();
         if(isFullOfRedColor())
-            throw new BallCantBeAddedBecauseConstraintIsBroken("The Bag cannot add Red Ball at this point.");
+            throw new RedBallLimitException();
         balls.add(newBall);
     }
 
-    private void addGreenColorBall(Ball newBall) throws BallCantBeAddedBecauseConstraintIsBroken {
+    private void addGreenColorBall(Ball newBall) throws BagLimitException, GreenBallLimitException {
         if(isFull())
-            throw new BallCantBeAddedBecauseConstraintIsBroken("The Bag is full. You can't add any more balls.");
+            throw new BagLimitException();
         if(isFullOfGreenColor())
-            throw new BallCantBeAddedBecauseConstraintIsBroken("The Bag cannot contain more than 3 Green Balls.");
+            throw new GreenBallLimitException();
         balls.add(newBall);
     }
 
-    public HashMap<String,Integer> getSummary() {
-        HashMap<String,Integer> summary = new HashMap<>();
-        summary.put("Bag",balls.size());
-        summary.put("Blue",getCountOfSpecificColoredBalls(Color.BLUE));
-        summary.put("Green",getCountOfSpecificColoredBalls(Color.GREEN));
-        summary.put("Red",getCountOfSpecificColoredBalls(Color.RED));
-        summary.put("Yellow",getCountOfSpecificColoredBalls(Color.YELLOW));
-        return summary;
-    }
-
-    public ArrayList<Character> getOrderedSummary(){
-        ArrayList<Character> orderedSummary = new ArrayList<>();
+    public HashMap<String,Integer> getSummary(SummaryFormat summaryFormat) {
+        ArrayList<Character> bagData = new ArrayList<>();
         for (Ball ball : balls) {
-            orderedSummary.add(ball.represent());
+            bagData.add(ball.represent());
         }
-        return orderedSummary;
+
+        return summaryFormat.summarizeBagData(bagData);
     }
 
 }
