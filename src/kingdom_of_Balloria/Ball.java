@@ -8,18 +8,13 @@ public class Ball {
         this.color = color;
     }
 
-    public boolean isOfGreenColor(){
-        return color == Color.GREEN;
+    public boolean isOfSpecificColor(Color colorToBeChecked) {
+        return color == colorToBeChecked;
     }
 
-    public boolean isOfRedColor(){
-        return color == Color.RED;
+    public char represent() {
+        return color.represent();
     }
 
-    public boolean isOfBlueColor(){
-        return color == Color.BLUE;
-    }
 
-    public void use(){
-    }
 }
