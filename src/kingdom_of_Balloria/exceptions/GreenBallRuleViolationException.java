@@ -1,4 +1,9 @@
 package kingdom_of_Balloria.exceptions;
 
-public class GreenBallRuleViolationException {
+import kingdom_of_Balloria.Color;
+
+public class GreenBallRuleViolationException extends RuleViolationForColorException {
+    public GreenBallRuleViolationException(int limit) {
+        super(Color.GREEN, limit);
+    }
 }

@@ -1,7 +1,10 @@
 package kingdom_of_Balloria;
-import kingdom_of_Balloria.Ball;
-import kingdom_of_Balloria.Balls;
+
+import kingdom_of_Balloria.balls.Balls;
+import kingdom_of_Balloria.balls.ReadOnlyBalls;
 import kingdom_of_Balloria.exceptions.BagFullException;
+import kingdom_of_Balloria.exceptions.RuleViolationForColorException;
+import kingdom_of_Balloria.rules.ReadOnlyRules;
 
 public class Bag {
 
